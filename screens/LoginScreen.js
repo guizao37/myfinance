@@ -39,6 +39,10 @@ const LoginScreen = () => {
       .catch(error => alert(error.message))
   }
 
+  const handleResetPassword = () => {
+    navigation.replace("Esqueci a senha")
+  }
+
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -46,18 +50,21 @@ const LoginScreen = () => {
     >
       <View style={styles.inputContainer}>
         <TextInput
-          placeholder="Email"
+          placeholder="E-mail"
+          placeholderTextColor='#878787'
           value={email}
           onChangeText={text => setEmail(text)}
           style={styles.input}
         />
         <TextInput
-          placeholder="Password"
+          placeholder="Senha"
+          placeholderTextColor='#878787'
           value={password}
           onChangeText={text => setPassword(text)}
           style={styles.input}
           secureTextEntry
         />
+
       </View>
 
       <View style={styles.buttonContainer}>
@@ -65,14 +72,23 @@ const LoginScreen = () => {
           onPress={handleLogin}
           style={styles.button}
         >
-          <Text style={styles.buttonText}>Login</Text>
+          <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={handleSignUp}
           style={[styles.button, styles.buttonOutline]}
         >
-          <Text style={styles.buttonOutlineText}>Register</Text>
+          <Text style={styles.buttonOutlineText}>Registrar</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity 
+        style={styles.resetPassword}
+        onPress={handleResetPassword}>
+          <Text style={styles.textResetPassword}>
+            Esqueci a senha
+          </Text>
+        </TouchableOpacity>
+
       </View>
     </KeyboardAvoidingView>
   )
@@ -125,4 +141,11 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
   },
+  resetPassword: {
+    marginTop: 10,
+  },
+  textResetPassword: {
+    fontWeight: 'bold',
+    color: 'black',
+  }
 })

@@ -1,5 +1,6 @@
 import { StyleSheet } from "react-native"
 import react from "react"
+
 const styles = StyleSheet.create({
     container: {
       flex: 1,
@@ -10,11 +11,13 @@ const styles = StyleSheet.create({
       width: '80%'
     },
     input: {
+      height: 40,
       backgroundColor: 'white',
       paddingHorizontal: 15,
       paddingVertical: 10,
       borderRadius: 10,
-      marginTop: 5,
+      marginTop: 10,
+      fontSize: 15
     },
     buttonContainer: {
       width: '60%',

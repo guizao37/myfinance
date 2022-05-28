@@ -4,24 +4,40 @@ import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, Vi
 import { auth } from '../firebase'
 import styles from './styles'
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [nome, setNome] = useState('')
+  const [cidade, setCidade] = useState('')
+  const [strCPF, setCPF] = useState('')
 
   const navigation = useNavigation()
 
-  useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(user => {
-      if (user) {
-        navigation.replace("Home")
-      }
-    })
+  function validaCPF(strCPF){
+    var Soma = 0;
+    var Resto;
+    var isCpf = "true";
 
-    return unsubscribe
-  }, [])
+    if (strCPF.length != 10){
+        isCpf = "false";
+        return false;
+    } else { isCpf = "true"; return true }
+
+    }
+
+
+  const backToHome = () => {
+      navigation.replace("Login")
+  }
 
   const handleSignUp = () => {
-    navigation.replace("Registrar")
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Registered with:', user.email);
+      })
+      .catch(error => alert(error.message))
   }
 
   const handleLogin = () => {
@@ -34,10 +50,6 @@ const LoginScreen = () => {
       .catch(error => alert(error.message))
   }
 
-  const handleResetPassword = () => {
-    navigation.replace("Esqueci a senha")
-  }
-
   return (
     <KeyboardAvoidingView
       style={styles.container}
@@ -45,11 +57,33 @@ const LoginScreen = () => {
       enabled
     >
       <View style={styles.inputContainer}>
+      <TextInput
+          placeholder="Nome"
+          placeholderTextColor='#878787'
+          value={nome}
+          onChangeText={text => setNome(text)}
+          style={styles.input}
+        />
         <TextInput
           placeholder="E-mail"
           placeholderTextColor='#878787'
           value={email}
           onChangeText={text => setEmail(text)}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="CPF"
+          placeholderTextColor='#878787'
+          maxLength={11}
+          value={strCPF}
+          onChangeText={text => setCPF(text)}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Cidade"
+          placeholderTextColor='#878787'
+          value={cidade}
+          onChangeText={text => setCidade(text)}
           style={styles.input}
         />
         <TextInput
@@ -65,12 +99,6 @@ const LoginScreen = () => {
 
       <View style={styles.buttonContainer}>
         <TouchableOpacity
-          onPress={handleLogin}
-          style={styles.button}
-        >
-          <Text style={styles.buttonText}>Entrar</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
           onPress={handleSignUp}
           style={[styles.button, styles.buttonOutline]}
         >
@@ -79,9 +107,9 @@ const LoginScreen = () => {
 
         <TouchableOpacity 
         style={styles.resetPassword}
-        onPress={handleResetPassword}>
+        onPress={backToHome}>
           <Text style={styles.textResetPassword}>
-            Esqueci a senha
+            VOLTAR
           </Text>
         </TouchableOpacity>
 
@@ -90,58 +118,4 @@ const LoginScreen = () => {
   )
 }
 
-export default LoginScreen
-
-/*const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  inputContainer: {
-    width: '80%'
-  },
-  input: {
-    backgroundColor: 'white',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
-    borderRadius: 10,
-    marginTop: 5,
-  },
-  buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
-  },
-  button: {
-    backgroundColor: '#0782F9',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-  },
-  buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: '#0782F9',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  resetPassword: {
-    marginTop: 10,
-  },
-  textResetPassword: {
-    fontWeight: 'bold',
-    color: 'black',
-  }
-})*/
+export default RegisterScreen

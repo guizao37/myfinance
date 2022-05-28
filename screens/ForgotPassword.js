@@ -2,6 +2,7 @@ import { useNavigation } from '@react-navigation/core'
 import { KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View, Button } from 'react-native'
 import { auth } from '../firebase'
 import { useState } from 'react'
+import styles from './styles'
 
 export default function ForgotPassword (){
 
@@ -41,7 +42,7 @@ export default function ForgotPassword (){
     )
   }
 
-  const styles = StyleSheet.create({
+/*const styles = StyleSheet.create({
     container: {
       flex: 1,
       justifyContent: 'center',
@@ -93,6 +94,6 @@ export default function ForgotPassword (){
       fontWeight: 'bold',
       color: 'black',
     }
-  })
+  })*/
 
   
